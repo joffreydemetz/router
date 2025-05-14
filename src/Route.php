@@ -12,13 +12,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class Route
 {
-  private Router $router;
-  private Request $request;
+  protected Router $router;
+  protected Request $request;
   private array $parameters = [];
   private bool $isJson = false;
 
-  const ATTRS_PROPS = ['_format', '_route', 'component', 'task', 'render', 'template'];
-  const QUERY_PROPS = ['component', 'task'];
+  protected array $attrs_props = ['_format', '_route', 'controller'];
+  protected array $query_props = ['controller'];
+
+  public function __construct(Router $router, Request $request)
+  {
+	  $this->router = $router;
+	  $this->request = $request;
+  }
 
   public function load()
   {
@@ -43,22 +49,15 @@ class Route
     if ('json' === $this->request->attributes->get('_format')) {
       $this->isJson = true;
     }
-
-    if ('' === $this->request->attributes->get('component', '')) {
-      $e = new NoRoutesException('Route does not contain any component to call');
-      $e->setRequestUri($this->request->getRequestUri());
-      $e->setRequestPath($path);
-      throw $e;
-    }
   }
 
-  protected function parse(array $vars)
+  protected function parse(array $vars): void
   {
-    foreach (self::ATTRS_PROPS as $key) {
+    foreach ($this->attrs_props as $key) {
       if (isset($vars[$key])) {
         $this->request->attributes->set($key, $vars[$key]);
 
-        if (!in_array($key, self::QUERY_PROPS)) {
+        if (!in_array($key, $this->query_props)) {
           unset($vars[$key]);
         }
       }
@@ -78,12 +77,6 @@ class Route
             $vars[$queryPart] = '';
           }
         }
-      }
-
-      if (isset($vars['debug'])) {
-        $vars['debug'] = true;
-        $this->request->attributes->set('debug', true);
-        // unset($vars['debug']);
       }
     }
 
