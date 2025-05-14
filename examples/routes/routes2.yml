@@ -1,0 +1,16 @@
+home:
+    path: /
+    defaults: { component: client, task: home, template: main }
+    methods: [GET]
+    options: {}
+About:
+    path: /about/
+    defaults: { component: page, task: display, template: main, slug: about }
+    methods: [GET]
+    options: {}
+
+News:
+    path: /news/
+    defaults: { component: headlines, task: list }
+    methods: [GET]
+    options: {}

@@ -1,0 +1,34 @@
+{
+    "name": "jdz/router",
+    "type": "library",
+    "description": "JDZ Router middleware for PHP applications",
+    "keywords": [
+        "JDZ",
+        "router"
+    ],
+    "homepage": "https://jdz.joffreydemetz.com/router/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joffrey Demetz",
+            "email": "joffrey.demetz@gmail.com",
+            "homepage": "https://joffreydemetz.com",
+            "role": "Lead"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "JDZ\\Router\\": "src"
+        }
+    },
+    "require": {
+        "symfony/config": "^7.2",
+        "symfony/http-foundation": "^7.2",
+        "symfony/routing": "^7.2",
+        "symfony/string": "^7.2",
+        "symfony/yaml": "^7.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.1"
+    }
+}

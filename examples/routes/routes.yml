@@ -1,0 +1,50 @@
+home:
+    path: /
+    defaults: { component: main, task: home }
+    methods: [GET]
+    options: {}
+vault:
+    path: /vault/
+    defaults: { component: main, task: vault }
+    methods: [GET]
+    options: { ignoreLastUrl: true }
+search:
+    path: /search/
+    defaults: { component: search, task: display }
+    methods: [GET]
+jsonSearchRefresh:
+    path: /json/search/
+    defaults: { _format: json, component: search, task: refresh }
+    requirements: { _format: json }
+    methods: [GET]
+searchQuest:
+    path: /search/q/
+    defaults: { component: search, task: search }
+    methods: [GET, POST]
+sitemap:
+    path: /site-map/
+    defaults: { task: display, component: sitemap }
+    methods: [GET]
+legalNotice:
+    path: /legal-notice/
+    defaults: { component: page, task: display, slug: legal-notice }
+    methods: [GET]
+    options: { ignoreLastUrl: true }
+jsonPage:
+    path: "/json/page/{slug}/"
+    defaults: { _format: json, component: page, task: dialog }
+    requirements: { _format: json }
+    methods: [GET]
+message:
+    path: /message/
+    defaults: { component: message, task: form }
+    methods: [GET]
+messageSubmit:
+    path: /message/submit/
+    defaults: { component: message, task: send }
+    methods: [POST]
+jsonMessage:
+    path: "/json/contact/{caller}/"
+    defaults: { _format: json, component: message, task: form }
+    requirements: { _format: json }
+    methods: [GET]
