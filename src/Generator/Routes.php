@@ -51,7 +51,7 @@ class Routes
 		}
 
 		foreach ($routes as $route) {
-			if (!($route instanceof Route)) {
+			if (!($route instanceof RouteInterface)) {
 				$route = $this->createRoute($route['url'], $route['name'] ?? '', $route['vars'] ?? [], $route['json'] ?? false);
 			}
 

@@ -7,7 +7,7 @@ use function Symfony\Component\String\u;
 /**
  * @author Joffrey Demetz <joffrey.demetz@gmail.com>
  */
-class Route 
+class Route implements RouteInterface
 {
 	private string $url;
 	private string $name;

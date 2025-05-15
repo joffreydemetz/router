@@ -4,6 +4,7 @@ namespace JDZ\Router\Generator;
 
 use JDZ\Router\Generator\Routes;
 use JDZ\Router\Generator\Route;
+use JDZ\Router\Generator\RouteInterface;
 
 /**
  * @author Joffrey Demetz <joffrey.demetz@gmail.com>
@@ -36,7 +37,7 @@ class RoutesImmutable extends Routes
 
 		$errors = [];
 		foreach ($routes as $route) {
-			if ($route instanceof Route) {
+			if ($route instanceof RouteInterface) {
 				$url = $route->getUrl();
 			} else {
 				$url = $route['url'] ?? '';
