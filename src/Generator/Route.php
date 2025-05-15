@@ -137,21 +137,12 @@ class Route
 	{
 		return [
 			$this->name,
+			$this->title,
+			$this->json,
 			$this->toArray()
 		];
 	}
 
-	public function export(): array
-	{
-		return array_merge($this->toArray(), [
-			'url' => $this->url,
-			'name' => $this->name,
-			'title' => $this->title,
-			'json' => $this->json,
-			'vars' => $this->vars,
-		]);
-	}
-	
 	public function toArray(): array
 	{
 		$route = [
