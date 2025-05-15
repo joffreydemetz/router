@@ -148,7 +148,7 @@ class Route
 			'title' => $this->title,
 			'json' => $this->json,
 			'vars' => $this->vars,
-		];
+		]);
 	}
 	
 	public function toArray(): array
