@@ -11,6 +11,7 @@ class Route
 {
 	private string $url;
 	private string $name;
+	private string $title;
 	private bool $json = false;
 	private array $vars = [];
 	private array $options = [];
