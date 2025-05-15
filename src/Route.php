@@ -26,12 +26,18 @@ class Route
 	  $this->request = $request;
   }
 
+	public function isJson(): bool
+	{
+		return $this->isJson;
+	}
+
   public function load()
   {
     $path = trim($this->request->getPathInfo(), '/');
     $path = '/' . $path . '/';
 
     if (false === ($parameters = $this->router->match())) {
+		d($parameters);
       if (preg_match("/\/json\/.+/", $path)) {
         $this->isJson = true;
       }
