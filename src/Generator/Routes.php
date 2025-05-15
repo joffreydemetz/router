@@ -7,7 +7,7 @@ use JDZ\Router\Generator\Route;
 /**
  * @author Joffrey Demetz <joffrey.demetz@gmail.com>
  */
-class Routes
+class Routes 
 {
 	protected array $routes = [];
 
@@ -70,7 +70,7 @@ class Routes
 	{
 		$routes = [];
 		foreach ($this->routes as $route) {
-			list($routeName, $routeData) = $route->export();
+			list($routeName, $routeTitle, $routeJson, $routeData) = $route->export();
 			$routes[$routeName] = $routeData;
 		}
 		return $routes;
@@ -78,7 +78,11 @@ class Routes
 
 	public function getRoutes(): array
 	{
-		return $this->routes;
+		$routes = [];
+		foreach($this->routes as $route){
+			$routes[] = $route->toArray();
+		}
+		return $routes;
 	}
 	
 	public function getRoute(string $url): Route|false
