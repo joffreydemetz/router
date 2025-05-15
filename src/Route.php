@@ -37,7 +37,6 @@ class Route
     $path = '/' . $path . '/';
 
     if (false === ($parameters = $this->router->match())) {
-		d($parameters);
       if (preg_match("/\/json\/.+/", $path)) {
         $this->isJson = true;
       }
