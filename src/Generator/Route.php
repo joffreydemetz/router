@@ -40,19 +40,6 @@ class Route
 		$this->vars = $vars;
 		$this->json = $json;
 	}
-
-	public function toArray(): array
-	{
-	return [
-		'url' => $this->url,
-		'name' => $this->name,
-		'title' => $this->title,
-		'json' => $this->json,
-		'vars' => $this->vars,
-		'options' => $this->options,
-		'methods' => $this->methods,
-	];
-	}
 	
 	public function setUrl(string $url)
 	{
@@ -153,6 +140,17 @@ class Route
 		];
 	}
 
+	public function export(): array
+	{
+		return array_merge($this->toArray(), [
+			'url' => $this->url,
+			'name' => $this->name,
+			'title' => $this->title,
+			'json' => $this->json,
+			'vars' => $this->vars,
+		];
+	}
+	
 	public function toArray(): array
 	{
 		$route = [
