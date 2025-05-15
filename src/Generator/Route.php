@@ -20,20 +20,19 @@ class Route implements RouteInterface
 	public function __construct(string $url, string $name = '', array $vars = [], bool $json = false)
 	{
 		if ($name) {
-			$title = u($name);
 			$name = u($name);
 		} else {
 			$name = u($url)->trim('/');
-			$title = clone $name;
-			
-			$title
-				->snake()
-				->replace('_', ' ')
-				->title();
 		}
 		
+		$title = clone $name;
+		$title
+			->snake()
+			->replace('_', ' ')
+			->title();
+		
 		// $name->camel()->truncate(50)->toString();
-		$name->camel()->toString();
+		$name = $name->camel()->toString();
 
 		$this->url = $url;
 		$this->name = (string)$name;
