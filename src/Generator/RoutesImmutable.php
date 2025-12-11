@@ -31,7 +31,7 @@ class RoutesImmutable extends Routes
 		return parent::addRoute($route);
 	}
 
-	public function addRoutes(array $routes, bool $replace = false, bool $reset = false)
+	public function addRoutes(array $routes, bool $replace = false, bool $reset = false): void
 	{
 		if (true === $reset || $replace) {
 			throw new \Exception('Routes are immutable');
