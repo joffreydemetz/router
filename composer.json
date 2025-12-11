@@ -1,7 +1,7 @@
 {
     "name": "jdz/router",
     "type": "library",
-    "description": "JDZ Router middleware for PHP applications",
+    "description": "JDZ Router is a PHP routing library built on top of the Symfony Routing component.",
     "keywords": [
         "JDZ",
         "router"
@@ -16,19 +16,28 @@
             "role": "Lead"
         }
     ],
+    "require": {
+        "php": ">=8.2",
+        "symfony/config": "^7.4",
+        "symfony/http-foundation": "^7.4",
+        "symfony/routing": "^7.4",
+        "symfony/string": "^7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "symfony/yaml": "^7.4"
+    },
     "autoload": {
         "psr-4": {
             "JDZ\\Router\\": "src"
         }
     },
-    "require": {
-        "symfony/config": "^7.2",
-        "symfony/http-foundation": "^7.2",
-        "symfony/routing": "^7.2",
-        "symfony/string": "^7.2",
-        "symfony/yaml": "^7.2"
+    "autoload-dev": {
+        "psr-4": {
+            "JDZ\\Router\\Tests\\": "tests"
+        }
     },
-    "require-dev": {
-        "phpunit/phpunit": "^12.1"
+    "scripts": {
+        "test": "phpunit --colors=always --testdox"
     }
 }
