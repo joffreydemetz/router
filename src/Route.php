@@ -32,7 +32,7 @@ class Route
 		return $this->isJson;
 	}
 
-	public function load()
+	public function load(): void
 	{
 		$path = trim($this->request->getPathInfo(), '/');
 		$path = '/' . $path . '/';
@@ -63,7 +63,7 @@ class Route
 			if (isset($vars[$key])) {
 				$this->request->attributes->set($key, $vars[$key]);
 
-				if (!in_array($key, $this->query_props)) {
+				if (!in_array($key, $this->query_props, true)) {
 					unset($vars[$key]);
 				}
 			}
@@ -74,8 +74,8 @@ class Route
 
 			if (count($queryParts) > 0) {
 				foreach ($queryParts as $queryPart) {
-					if (strpos($queryPart, '=') !== false) {
-						list($k, $v) = explode('=', $queryPart, 2);
+				if (str_contains($queryPart, '=')) {
+					list($k, $v) = explode('=', $queryPart, 2);
 						if (!isset($vars[$k])) {
 							$vars[$k] = $v;
 						}
