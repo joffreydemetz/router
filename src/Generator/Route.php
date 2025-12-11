@@ -1,12 +1,14 @@
 <?php
 
+/**
+ * @author    Joffrey Demetz <joffrey.demetz@gmail.com>
+ * @license   MIT License; <https://opensource.org/licenses/MIT>
+ */
+
 namespace JDZ\Router\Generator;
 
 use function Symfony\Component\String\u;
 
-/**
- * @author Joffrey Demetz <joffrey.demetz@gmail.com>
- */
 class Route implements RouteInterface
 {
 	private string $url;
@@ -24,13 +26,13 @@ class Route implements RouteInterface
 		} else {
 			$name = u($url)->trim('/');
 		}
-		
+
 		$title = clone $name;
 		$title
 			->snake()
 			->replace('_', ' ')
 			->title();
-		
+
 		// $name->camel()->truncate(50)->toString();
 		$name = $name->camel()->toString();
 
@@ -40,7 +42,7 @@ class Route implements RouteInterface
 		$this->vars = $vars;
 		$this->json = $json;
 	}
-	
+
 	public function setUrl(string $url)
 	{
 		$this->url = $url;

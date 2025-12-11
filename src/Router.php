@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @author    Joffrey Demetz <joffrey.demetz@gmail.com>
+ * @license   MIT License; <https://opensource.org/licenses/MIT>
+ */
+
 namespace JDZ\Router;
 
 use Symfony\Component\Config\FileLocator;
@@ -12,9 +17,6 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
-/**
- * @author Joffrey Demetz <joffrey.demetz@gmail.com>
- */
 class Router
 {
 	private string $basePath;

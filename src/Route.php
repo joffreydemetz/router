@@ -1,15 +1,16 @@
 <?php
 
+/**
+ * @author    Joffrey Demetz <joffrey.demetz@gmail.com>
+ * @license   MIT License; <https://opensource.org/licenses/MIT>
+ */
+
 namespace JDZ\Router;
 
 use JDZ\Router\Router;
-use JDZ\Router\NoRoutesException;
 use JDZ\Router\RouterException;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @author Joffrey Demetz <joffrey.demetz@gmail.com>
- */
 class Route
 {
 	protected Router $router;

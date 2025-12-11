@@ -1,12 +1,14 @@
 <?php
 
+/**
+ * @author    Joffrey Demetz <joffrey.demetz@gmail.com>
+ * @license   MIT License; <https://opensource.org/licenses/MIT>
+ */
+
 namespace JDZ\Router\Generator;
 
 use JDZ\Router\Generator\Route;
 
-/**
- * @author Joffrey Demetz <joffrey.demetz@gmail.com>
- */
 class Routes 
 {
 	protected array $routes = [];
