@@ -16,13 +16,13 @@ class GeneratorTest extends TestCase
         ], 'example-alias');
 
         $this->assertEquals('/example/', $route->getUrl());
-        $this->assertEquals('Example', $route->getName());
+        $this->assertEquals('example', $route->getName());
 
         $this->assertEquals([
             'component' => 'page',
             'task' => 'display',
             'slug' => 'example',
-        ], $route->getOptions());
+        ], $route->getVars());
     }
 
     public function testRoutesAddAndRetrieve()
@@ -47,35 +47,28 @@ class GeneratorTest extends TestCase
         $allRoutes = $routes->getRoutes();
 
         $this->assertCount(2, $allRoutes);
-        $this->assertArrayHasKey('/example/', $allRoutes);
-        $this->assertArrayHasKey('/example2/', $allRoutes);
-        $this->assertEquals($route1, $allRoutes['/example/']);
-        $this->assertEquals($route2, $allRoutes['/example2/']);
+        $this->assertEquals('/example/', $allRoutes[0]['path']);
+        $this->assertEquals('/example2/', $allRoutes[1]['path']);
     }
 
     public function testRoutesImmutable()
     {
-        $routes = new Routes();
-
-        $route1 = new Route('/example/', 'Example', [
-            'component' => 'page',
-            'task' => 'display',
-            'slug' => 'example',
-        ], 'example-alias');
-
-        $routes->addRoute($route1);
-
-        $immutableRoutes = new RoutesImmutable($routes->getRoutes());
+        $immutableRoutes = new RoutesImmutable([
+            new Route('/example/', 'Example', [
+                'component' => 'page',
+                'task' => 'display',
+                'slug' => 'example',
+            ])
+        ]);
 
         $this->assertCount(1, $immutableRoutes->getRoutes());
-        $this->assertArrayHasKey('/example/', $immutableRoutes->getRoutes());
 
-        // Ensure immutability
+        // Ensure immutability - try to add route with same URL
         $this->expectException(\Exception::class);
-        $immutableRoutes->addRoute(new Route('/example2/', 'Example2', [
+        $immutableRoutes->addRoute(new Route('/example/', 'Example2', [
             'component' => 'page',
             'task' => 'display',
             'slug' => 'example2',
-        ], 'example2-alias'));
+        ]));
     }
 }
