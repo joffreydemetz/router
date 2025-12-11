@@ -38,10 +38,6 @@ class Route
 		$path = '/' . $path . '/';
 
 		if (false === ($parameters = $this->router->match())) {
-			if (preg_match("/\/json\/.+/", $path)) {
-				$this->isJson = true;
-			}
-
 			$e = new RouterException('Route not found');
 			$e->setRequestUri($this->request->getRequestUri());
 			$e->setRequestPath($path);
@@ -74,8 +70,8 @@ class Route
 
 			if (count($queryParts) > 0) {
 				foreach ($queryParts as $queryPart) {
-				if (str_contains($queryPart, '=')) {
-					list($k, $v) = explode('=', $queryPart, 2);
+					if (str_contains($queryPart, '=')) {
+						list($k, $v) = explode('=', $queryPart, 2);
 						if (!isset($vars[$k])) {
 							$vars[$k] = $v;
 						}

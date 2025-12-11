@@ -30,7 +30,7 @@ class GeneratorRouteTest extends TestCase
 
     public function testRouteCreationWithJson(): void
     {
-        $route = new Route('/json/data/', 'JsonData', [], true);
+        $route = new Route('/api/data/', 'ApiData', [], true);
 
         $this->assertTrue($route->isJson());
     }
@@ -157,7 +157,7 @@ class GeneratorRouteTest extends TestCase
 
     public function testToArrayWithJson(): void
     {
-        $route = new Route('/json/test/', 'JsonTest', [], true);
+        $route = new Route('/api/test/', 'JsonTest', [], true);
 
         $array = $route->toArray();
 

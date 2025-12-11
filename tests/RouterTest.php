@@ -109,9 +109,9 @@ class RouterTest extends TestCase
         $router = new Router($this->routesPath, $request);
         $router->addYml('routes.yml');
 
-        $url = $router->url('jsonPage', ['slug' => 'test-page']);
+        $url = $router->url('apiPage', ['slug' => 'test-page']);
 
-        $this->assertEquals('/json/page/test-page/', $url);
+        $this->assertEquals('/api/page/test-page/', $url);
     }
 
     public function testUrlGenerationAbsolute(): void
