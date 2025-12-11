@@ -1,12 +1,14 @@
 <?php
 
+/**
+ * @author    Joffrey Demetz <joffrey.demetz@gmail.com>
+ * @license   MIT License; <https://opensource.org/licenses/MIT>
+ */
+
 namespace JDZ\Router\Generator;
 
 use function Symfony\Component\String\u;
 
-/**
- * @author Joffrey Demetz <joffrey.demetz@gmail.com>
- */
 class Route implements RouteInterface
 {
 	private string $url;
@@ -24,14 +26,13 @@ class Route implements RouteInterface
 		} else {
 			$name = u($url)->trim('/');
 		}
-		
+
 		$title = clone $name;
 		$title
 			->snake()
 			->replace('_', ' ')
 			->title();
-		
-		// $name->camel()->truncate(50)->toString();
+
 		$name = $name->camel()->toString();
 
 		$this->url = $url;
@@ -40,8 +41,8 @@ class Route implements RouteInterface
 		$this->vars = $vars;
 		$this->json = $json;
 	}
-	
-	public function setUrl(string $url)
+
+	public function setUrl(string $url): self
 	{
 		$this->url = $url;
 		return $this;
@@ -62,7 +63,7 @@ class Route implements RouteInterface
 		return $this->url;
 	}
 
-	public function withJson(bool $json = true)
+	public function withJson(bool $json = true): self
 	{
 		$this->json = $json;
 		return $this;
@@ -78,7 +79,7 @@ class Route implements RouteInterface
 		return $this->vars;
 	}
 
-	public function setVars(array $vars)
+	public function setVars(array $vars): self
 	{
 		foreach ($vars as $key => $value) {
 			$this->setVar($key, $value);
@@ -86,7 +87,7 @@ class Route implements RouteInterface
 		return $this;
 	}
 
-	public function setVar(string $key, mixed $value)
+	public function setVar(string $key, mixed $value): self
 	{
 		$this->vars[$key] = $value;
 		return $this;
@@ -97,7 +98,7 @@ class Route implements RouteInterface
 		return $this->vars[$key] ?? null;
 	}
 
-	public function setOptions(array $options)
+	public function setOptions(array $options): self
 	{
 		foreach ($options as $key => $value) {
 			$this->setOption($key, $value);
@@ -110,7 +111,7 @@ class Route implements RouteInterface
 		return $this->options;
 	}
 
-	public function setOption(string $key, mixed $value)
+	public function setOption(string $key, mixed $value): self
 	{
 		$this->options[$key] = $value;
 		return $this;
@@ -121,7 +122,7 @@ class Route implements RouteInterface
 		return $this->options[$key] ?? null;
 	}
 
-	public function setMethods(array $methods)
+	public function setMethods(array $methods): self
 	{
 		$this->methods = $methods;
 		return $this;

@@ -1,13 +1,15 @@
 <?php
 
+/**
+ * @author    Joffrey Demetz <joffrey.demetz@gmail.com>
+ * @license   MIT License; <https://opensource.org/licenses/MIT>
+ */
+
 namespace JDZ\Router\Generator;
 
 use JDZ\Router\Generator\Route;
 
-/**
- * @author Joffrey Demetz <joffrey.demetz@gmail.com>
- */
-class Routes 
+class Routes
 {
 	protected array $routes = [];
 
@@ -44,7 +46,7 @@ class Routes
 		return $this->routes[$route->getUrl()];
 	}
 
-	public function addRoutes(array $routes, bool $replace = false, bool $reset = false)
+	public function addRoutes(array $routes, bool $replace = false, bool $reset = false): void
 	{
 		if ($reset) {
 			$this->routes = [];
@@ -79,12 +81,12 @@ class Routes
 	public function getRoutes(): array
 	{
 		$routes = [];
-		foreach($this->routes as $route){
+		foreach ($this->routes as $route) {
 			$routes[] = $route->toArray();
 		}
 		return $routes;
 	}
-	
+
 	public function getRoute(string $url): Route|false
 	{
 		return $this->routes[$url] ?? false;

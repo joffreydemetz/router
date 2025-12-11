@@ -1,16 +1,18 @@
 <?php
 
+/**
+ * @author    Joffrey Demetz <joffrey.demetz@gmail.com>
+ * @license   MIT License; <https://opensource.org/licenses/MIT>
+ */
+
 namespace JDZ\Router;
 
-/**
- * @author Joffrey Demetz <joffrey.demetz@gmail.com>
- */
 class RouterException extends \RuntimeException
 {
   private string $requestUri = '';
   private string $requestPath = '';
 
-  public function setRequestUri(string $requestUri)
+  public function setRequestUri(string $requestUri): self
   {
     $this->requestUri = $requestUri;
     return $this;
@@ -21,7 +23,7 @@ class RouterException extends \RuntimeException
     return $this->requestUri;
   }
 
-  public function setRequestPath(string $requestPath)
+  public function setRequestPath(string $requestPath): self
   {
     $this->requestPath = $requestPath;
     return $this;

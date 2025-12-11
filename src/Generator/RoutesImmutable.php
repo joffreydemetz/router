@@ -1,14 +1,16 @@
 <?php
 
+/**
+ * @author    Joffrey Demetz <joffrey.demetz@gmail.com>
+ * @license   MIT License; <https://opensource.org/licenses/MIT>
+ */
+
 namespace JDZ\Router\Generator;
 
 use JDZ\Router\Generator\Routes;
 use JDZ\Router\Generator\Route;
 use JDZ\Router\Generator\RouteInterface;
 
-/**
- * @author Joffrey Demetz <joffrey.demetz@gmail.com>
- */
 class RoutesImmutable extends Routes
 {
 	public function createRoute(string $url, string $name = '', array $vars = [], bool $json = false): Route
@@ -29,7 +31,7 @@ class RoutesImmutable extends Routes
 		return parent::addRoute($route);
 	}
 
-	public function addRoutes(array $routes, bool $replace = false, bool $reset = false)
+	public function addRoutes(array $routes, bool $replace = false, bool $reset = false): void
 	{
 		if (true === $reset || $replace) {
 			throw new \Exception('Routes are immutable');

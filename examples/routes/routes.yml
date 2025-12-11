@@ -12,10 +12,10 @@ search:
     path: /search/
     defaults: { component: search, task: display }
     methods: [GET]
-jsonSearchRefresh:
-    path: /json/search/
-    defaults: { _format: json, component: search, task: refresh }
-    requirements: { _format: json }
+apiSearchRefresh:
+    path: /api/search/
+    defaults: { _format: api, component: search, task: refresh }
+    requirements: { _format: api }
     methods: [GET]
 searchQuest:
     path: /search/q/
@@ -30,10 +30,10 @@ legalNotice:
     defaults: { component: page, task: display, slug: legal-notice }
     methods: [GET]
     options: { ignoreLastUrl: true }
-jsonPage:
-    path: "/json/page/{slug}/"
-    defaults: { _format: json, component: page, task: dialog }
-    requirements: { _format: json }
+apiPage:
+    path: "/api/page/{slug}/"
+    defaults: { _format: api, component: page, task: dialog }
+    requirements: { _format: api }
     methods: [GET]
 message:
     path: /message/
@@ -43,8 +43,8 @@ messageSubmit:
     path: /message/submit/
     defaults: { component: message, task: send }
     methods: [POST]
-jsonMessage:
-    path: "/json/contact/{caller}/"
-    defaults: { _format: json, component: message, task: form }
-    requirements: { _format: json }
+apiMessage:
+    path: "/api/contact/{caller}/"
+    defaults: { _format: api, component: message, task: form }
+    requirements: { _format: api }
     methods: [GET]

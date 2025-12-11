@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @author    Joffrey Demetz <joffrey.demetz@gmail.com>
+ * @license   MIT License; <https://opensource.org/licenses/MIT>
+ */
+
 namespace JDZ\Router;
 
 use Symfony\Component\Config\FileLocator;
@@ -12,9 +17,6 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
-/**
- * @author Joffrey Demetz <joffrey.demetz@gmail.com>
- */
 class Router
 {
 	private string $basePath;
@@ -36,11 +38,10 @@ class Router
 		$this->collection = new RouteCollection();
 	}
 
-	public function addYml(string $path)
+	public function addYml(string $path): self
 	{
-		if (\file_exists($this->basePath . $path)) {
+		if (file_exists($this->basePath . $path)) {
 			try {
-
 				$locator = new FileLocator([$this->basePath]);
 				$loader	= new YamlFileLoader($locator);
 
@@ -55,7 +56,7 @@ class Router
 		return $this;
 	}
 
-	public function addRedirectPaths(array $redirects)
+	public function addRedirectPaths(array $redirects): self
 	{
 		foreach ($redirects as $from => $to) {
 			$from = trim($from, '/');
@@ -69,8 +70,8 @@ class Router
 				throw new RouterException('Invalid redirect path: "' . $from . '" => "' . $to . '"');
 			}
 
-			$from = '' === $from ?	'/' : '/' . $from . '/';
-			$to = '' === $to ?	'/' : '/' . $to . '/';
+			$from = '' === $from ? '/' : '/' . $from . '/';
+			$to = '' === $to ? '/' : '/' . $to . '/';
 
 			$this->redirectPaths[$from] = $to;
 		}
@@ -80,18 +81,15 @@ class Router
 
 	public function match(?string $pathinfo = null): array|false
 	{
-		if (!$pathinfo) {
-			$pathinfo = $this->request->getPathInfo();
-		}
+		$pathinfo ??= $this->request->getPathInfo();
 
 		$matcher = new UrlMatcher($this->collection, $this->requestContext);
 
 		try {
-
 			if ($vars = $matcher->match($pathinfo)) {
 				return $vars;
 			}
-		} catch (\Throwable $e) {
+		} catch (\Throwable) {
 		}
 
 		return false;
@@ -99,12 +97,9 @@ class Router
 
 	public function url(?string $name = null, array $params = [], bool $absolute = false): string
 	{
-		if (!$name) {
-			$name = 'home';
-		}
+		$name ??= 'home';
 
 		try {
-
 			$generator = new UrlGenerator($this->collection, $this->requestContext);
 
 			if (true === $absolute) {
@@ -119,15 +114,13 @@ class Router
 
 	public function getRoute(?string $pathinfo = null): Route|false
 	{
-		if (!$pathinfo) {
-			$pathinfo = $this->request->getPathInfo();
-		}
+		$pathinfo ??= $this->request->getPathInfo();
 
 		foreach ($this->collection as $route) {
 			$compiledRoute = $route->compile();
 
 			// check the static prefix of the URL first. Only use the more expensive preg_match when it matches
-			if ('' !== $compiledRoute->getStaticPrefix() && 0 !== strpos($pathinfo, $compiledRoute->getStaticPrefix())) {
+			if ('' !== $compiledRoute->getStaticPrefix() && !str_starts_with($pathinfo, $compiledRoute->getStaticPrefix())) {
 				continue;
 			}
 
@@ -149,7 +142,7 @@ class Router
 					$method = 'GET';
 				}
 
-				if (!\in_array($method, $requiredMethods)) {
+				if (!in_array($method, $requiredMethods, true)) {
 					if ($hasRequiredScheme) {
 						$this->allow = array_merge($this->allow, $requiredMethods);
 					}

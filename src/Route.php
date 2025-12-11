@@ -1,15 +1,16 @@
 <?php
 
+/**
+ * @author    Joffrey Demetz <joffrey.demetz@gmail.com>
+ * @license   MIT License; <https://opensource.org/licenses/MIT>
+ */
+
 namespace JDZ\Router;
 
 use JDZ\Router\Router;
-use JDZ\Router\NoRoutesException;
 use JDZ\Router\RouterException;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @author Joffrey Demetz <joffrey.demetz@gmail.com>
- */
 class Route
 {
 	protected Router $router;
@@ -31,16 +32,12 @@ class Route
 		return $this->isJson;
 	}
 
-	public function load()
+	public function load(): void
 	{
 		$path = trim($this->request->getPathInfo(), '/');
 		$path = '/' . $path . '/';
 
 		if (false === ($parameters = $this->router->match())) {
-			if (preg_match("/\/json\/.+/", $path)) {
-				$this->isJson = true;
-			}
-
 			$e = new RouterException('Route not found');
 			$e->setRequestUri($this->request->getRequestUri());
 			$e->setRequestPath($path);
@@ -62,7 +59,7 @@ class Route
 			if (isset($vars[$key])) {
 				$this->request->attributes->set($key, $vars[$key]);
 
-				if (!in_array($key, $this->query_props)) {
+				if (!in_array($key, $this->query_props, true)) {
 					unset($vars[$key]);
 				}
 			}
@@ -73,7 +70,7 @@ class Route
 
 			if (count($queryParts) > 0) {
 				foreach ($queryParts as $queryPart) {
-					if (strpos($queryPart, '=') !== false) {
+					if (str_contains($queryPart, '=')) {
 						list($k, $v) = explode('=', $queryPart, 2);
 						if (!isset($vars[$k])) {
 							$vars[$k] = $v;
