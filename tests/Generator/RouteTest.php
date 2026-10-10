@@ -12,7 +12,7 @@ class GeneratorRouteTest extends TestCase
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals('/example/', $route->getUrl());
         $this->assertEquals('exampleRoute', $route->getName());
-        $this->assertEquals('ExampleRoute', $route->getTitle());
+        $this->assertEquals('Example route', $route->getTitle());
     }
 
     public function testRouteCreationWithVars(): void
@@ -40,7 +40,7 @@ class GeneratorRouteTest extends TestCase
         $route = new Route('/my-custom-route/');
 
         $this->assertEquals('myCustomRoute', $route->getName());
-        $this->assertEquals('my-custom-route', $route->getTitle());
+        $this->assertEquals('My custom route', $route->getTitle());
     }
 
     public function testSetUrl(): void
@@ -224,7 +224,7 @@ class GeneratorRouteTest extends TestCase
         $this->assertIsArray($export);
         $this->assertCount(4, $export);
         $this->assertEquals('testRoute', $export[0]); // name
-        $this->assertEquals('TestRoute', $export[1]); // title
+        $this->assertEquals('Test route', $export[1]); // title
         $this->assertFalse($export[2]); // json
         $this->assertIsArray($export[3]); // array data
     }

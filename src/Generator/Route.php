@@ -27,8 +27,8 @@ class Route implements RouteInterface
 			$name = u($url)->trim('/');
 		}
 
-		$title = clone $name;
-		$title
+		// UnicodeString is immutable: keep the result (the title used to stay the raw name)
+		$title = $name
 			->snake()
 			->replace('_', ' ')
 			->title();
