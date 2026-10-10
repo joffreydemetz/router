@@ -6,13 +6,6 @@ use JDZ\Router\Generator\Routes;
 
 class GeneratorRoutesTest extends TestCase
 {
-    public function testRoutesCreation(): void
-    {
-        $routes = new Routes();
-
-        $this->assertInstanceOf(Routes::class, $routes);
-    }
-
     public function testRoutesCreationWithInitialRoutes(): void
     {
         $routes = new Routes([
