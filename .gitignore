@@ -3,3 +3,4 @@ composer.lock
 /.phpunit.cache/
 /examples/routes/generated/
 /.claude/
+/coverage/
