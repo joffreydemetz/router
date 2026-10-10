@@ -14,14 +14,6 @@ class RouterTest extends TestCase
         $this->routesPath = __DIR__ . '/../examples/routes/';
     }
 
-    public function testRouterConstruction(): void
-    {
-        $request = Request::create('/');
-        $router = new Router($this->routesPath, $request);
-
-        $this->assertInstanceOf(Router::class, $router);
-    }
-
     public function testAddYmlLoadsRoutes(): void
     {
         $request = Request::create('/');
@@ -39,9 +31,9 @@ class RouterTest extends TestCase
         $request = Request::create('/');
         $router = new Router($this->routesPath, $request);
 
-        // Should not throw exception for non-existent file
-        $router->addYml('non-existent.yml');
-        $this->assertTrue(true);
+        // a missing file adds nothing and is not an error
+        $this->assertSame($router, $router->addYml('non-existent.yml'));
+        $this->assertSame([], $router->getRoutes());
     }
 
     public function testMatchHomeRoute(): void
@@ -136,18 +128,33 @@ class RouterTest extends TestCase
         $router->url('non-existent-route');
     }
 
-    public function testAddRedirectPaths(): void
+    public function testAnOldPathResolvesToItsNewRouteAndFlagsTheRedirect(): void
     {
-        $request = Request::create('/');
+        $request = Request::create('/old-path/');
         $router = new Router($this->routesPath, $request);
         $router->addYml('routes.yml');
 
         $router->addRedirectPaths([
-            '/old-path/' => '/search/',
+            'old-path' => '/search/',
             '/another-old/' => '/vault/',
         ]);
 
-        $this->assertInstanceOf(Router::class, $router);
+        $route = $router->getRoute();
+
+        $this->assertNotFalse($route);
+        $this->assertSame('/search/', $route->getPath());
+        $this->assertSame('/search/', $request->attributes->get('_redirect'));
+    }
+
+    public function testARedirectCycleEndsWithoutARoute(): void
+    {
+        $request = Request::create('/a/');
+        $router = new Router($this->routesPath, $request);
+        $router->addYml('routes.yml');
+
+        $router->addRedirectPaths(['/a/' => '/b/', '/b/' => '/a/']);
+
+        $this->assertFalse($router->getRoute());
     }
 
     public function testAddRedirectPathsInvalidSamePath(): void

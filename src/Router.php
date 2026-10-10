@@ -115,8 +115,14 @@ class Router implements RouterInterface
 
 	public function getRoute(?string $pathinfo = null): Route|false
 	{
-		$pathinfo ??= $this->request->getPathInfo();
+		return $this->findRoute($pathinfo ?? $this->request->getPathInfo(), []);
+	}
 
+	/**
+	 * @param string[] $redirectedFrom the paths already redirected from: a redirect cycle ends the search
+	 */
+	private function findRoute(string $pathinfo, array $redirectedFrom): Route|false
+	{
 		foreach ($this->collection as $route) {
 			$compiledRoute = $route->compile();
 
@@ -161,9 +167,9 @@ class Router implements RouterInterface
 
 		$redirect = $this->isAnOldRoute($pathinfo);
 
-		if ($redirect) {
+		if ($redirect && !in_array($redirect, $redirectedFrom, true)) {
 			$this->request->attributes->set('_redirect', $redirect);
-			return $this->getRoute($redirect);
+			return $this->findRoute($redirect, [...$redirectedFrom, $pathinfo]);
 		}
 
 		return false;
